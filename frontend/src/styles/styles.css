@@ -1,0 +1,219 @@
+@import url('https://fonts.googleapis.com/css2?family=Albert+Sans:ital,wght@0,100..900;1,100..900&family=Anton&family=Host+Grotesk:ital,wght@0,300..800;1,300..800&display=swap');
+*,
+*::before,
+*::after {
+    text-align: center;
+  box-sizing: border-box;
+  margin: 0.1rem;
+  padding: 0.1rem;
+}
+body{
+  font-family: "Albert Sans","Anton", serif;
+/*background-color: #edf3f5;
+background-color: aliceblue;*/
+color: #0f0f0f;
+background-image: url("../assets/imgbackground/cartographer.png") ;
+-webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+#root
+h1 , h2 , h3 , h4{
+    font-family: "Anton", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+  }
+  h1{
+    font-size: xx-large;
+    font-weight: 700;
+  }
+p, span, input, button{
+  font-family: "Albert Sans", serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+}
+/*NAVBAR*/
+#navId{
+    display: inline-flex;
+    width: 100%;
+    height: 100%;
+    max-height: 10vh;
+    justify-content: space-evenly;
+    box-sizing: border-box;
+  }
+  .navbarelemclass{
+    display: flex;
+    align-items: center;
+  }
+  .navbariconpic img{
+    max-width: 50px;
+  }
+  #navSearchBarDivId{
+    width: 30%;
+  }
+
+nav img.logoCentralImg{
+  width: inherit;
+  max-width: 30%;
+}
+
+
+/*THE BOARD*/
+/*BOXES*/
+/*
+.boxDiv{
+    border: solid 1px;
+    padding: auto;
+}
+.boxDivClass{
+  text-align: center;
+  border-radius: 25px;
+  padding: 0.7rem;
+  margin: 0.7rem;
+  box-shadow: 0px 8px 5px #5d595928;
+  display: inline-block;
+  border: #acacac04;
+}
+.divLogIn{
+    width: 80%;
+
+}
+.titleSpaceClass{
+    margin-top: 15%;
+    margin-bottom: 4rem;
+}
+.connexionSpaceClass{
+    margin: 2rem;
+    align-items: flex-start;
+    
+}
+
+.inputSpaceClass{
+    display: flex;
+    margin-top: 1rem ;
+    margin-bottom: 1rem ;
+flex-wrap: wrap;
+}
+.inputSpaceClass >*:first-child {
+    display: flex;
+    align-self: flex-start;
+}
+
+.inputSpaceClass .inputcssClass{
+    align-self: flex-end;
+}
+
+.buttoncssClass{
+    padding: 0.5rem;
+    border-radius: 10px;
+    width: 20%;
+    background-color: #0f0f0f;
+    color: aliceblue;
+}
+
+.labelClass{
+}
+.inputcssClass{
+        padding: 0.7rem;
+        border-radius: 10px;
+        width: 50%;
+        background-color: #ffffff5b;
+        border: none;
+
+}
+.inputcssClass::placeholder{
+    color: #0f0f0f;
+}
+
+#icon {
+   right: 12px;
+    top: 16px;
+    width: 24px;
+    height: 24px;
+  }
+
+.boxDiv{
+    border: solid 1px;
+    padding: auto;
+}
+.boxDivClass{
+  text-align: center;
+  border-radius: 25px;
+  padding: 0.7rem;
+  margin: 0.7rem;
+  box-shadow: 0px 8px 5px #5d595928;
+  display: inline-block;
+  border: #acacac04;
+}*/
+
+.divLogIn{
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    margin-top: 20%;
+    padding-bottom: 10%;
+}
+.titleSpaceClass{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3rem;
+    margin-top: 2rem;
+}
+.connexionSpaceClass{
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    align-items: center;
+}
+
+.inputSpaceClass{
+    display: inline-flex;
+    align-items: center;
+    margin: none;
+    width: 50%;
+    height: 20%;
+    background-color: #ffffff;
+    border-radius: 0.5rem;
+    padding: 0.7rem;
+    border: none;
+}
+.inputSpaceClass input{
+    border: none;
+    width: 100%;
+    padding: 0.5rem;
+}
+.btnSpaceClass{
+  display: block;
+  text-align: center;
+  align-items: center;
+}
+.soloBbtnSpaceClass{
+display: inline-flex;
+margin: 2rem;
+}
+.btnSpaceClass label{
+display: flex;
+}
+.btnSpaceClass input{
+  padding: 0.5rem;
+}
+
+
+.loginIcon{
+    display: inline-flex;
+    margin: none;
+    width: 10%;
+    vertical-align: middle;
+}
+.labelClass{
+    display: block;
+}
+
+/*
+input = inputSpaceClass
+inputs = connexionSpaceClass
+
+
+
+*/
