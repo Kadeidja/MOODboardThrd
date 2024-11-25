@@ -1,7 +1,7 @@
 const express = require('express');
 const routerExpress = express.Router()
 const cors = require('cors')
-const {testLogin} = require('../controllers/authController')
+const {testLogin,signInFunc} = require('../controllers/authController')
 //MIDDLEWARE
 
 routerExpress.use(
@@ -12,5 +12,6 @@ routerExpress.use(
 )
 
 routerExpress.get('/',testLogin)
+routerExpress.post('/signin',signInFunc)
 
 module.exports = routerExpress

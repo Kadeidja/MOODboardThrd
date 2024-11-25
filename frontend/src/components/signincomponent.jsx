@@ -1,35 +1,41 @@
 //IMPORTS
 import { useState } from 'react';
-import userIcon from '../assets/usericon.svg'
-import keyIcon from '../assets/keylock.svg'
 import axios from 'axios';
-import {toast} from 'react-hot-toast';
-//import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-hot-toast';
+import { Await, useNavigate } from 'react-router-dom';
+import userIcon from '../assets/usericon.svg';
+import keyIcon from '../assets/keylock.svg';
 import { TheReButtonLink,TheReButtonSubmit } from './reusablecomponent';
+
+//const notify = () => toast({error});
 
 
 export default function SignInComp(){
-    //const navigation = useNavigate()
+const navigation = useNavigate('');
 
 const [dataSubscription,setDataSubscription] = useState({
     name: '',
     email:'',
     password: '',
-})
+});
 const subscriptionUser = async (e) => {
     e.preventDefault();
     const {name, email, password} = dataSubscription
+    //const { ename, eemail, epassword} = errorDataSubscription
+               // {TheReButtonSubmit({labelId:'userSubscriptionLogInId',btnValue:'REGISTER',btnId:'userSubscription',btnName:'loginSubscriptioninput'})}
+
     try {
         const {dataSubscription} = await axios.post('/signin', {
-            name, email, password
-        })
+            name, email, password,
+        }
+    )
+        if (dataSubscription.error){
+            toast.error(dataSubscription.error, {position:'bottom-left'})
 
-        if(dataSubscription.error){
-            toast.error(dataSubscription.error)
         } else {
             setDataSubscription({})
-            toast.success('Logged Up!!!')
-            //navigation('/login')
+            toast.success('Sign In Succesfully!!!')
+            navigation('/login')
         }
     } catch (error) {
         console.log(error)
@@ -50,9 +56,12 @@ const subscriptionUser = async (e) => {
           className="loginIcon"
           src={userIcon}
           alt="icon"/>
-          <input id="loginuserName" name="loginnameinput" type="text" className="inputcssClass" placeholder="Veuillez entrer votre nom" value={dataSubscription.name} onChange={(e)=>setDataSubscription({...dataSubscription, name: e.target.value})}/>
+          <input id="loginuserName" name="loginnameinput" type="text" className="inputcssClass" placeholder="Veuillez entrer votre nom" defaultValue={dataSubscription.name} onChange={(e)=>setDataSubscription({...dataSubscription, name: e.target.value})}/>
         
         <br/>
+        <div id='inputNameError'>
+            <p></p>
+        </div>
         </div>
 
         <label id="userMailLogInId" className="labelClass" htmlFor="userMail">Mail</label>
@@ -61,8 +70,11 @@ const subscriptionUser = async (e) => {
           className="loginIcon"
           src={keyIcon}
           alt="icon"/>
-          <input id="userMail" name="loginmailinput" type="email" className="inputcssClass" placeholder="Entrez votre e-mail"  value={dataSubscription.email} onChange={(e)=>setDataSubscription({...dataSubscription, email: e.target.value})}/>
+          <input id="userMail" name="loginmailinput" type="email" className="inputcssClass" placeholder="Entrez votre e-mail"  defaultValue={dataSubscription.email} onChange={(e)=>setDataSubscription({...dataSubscription, email: e.target.value})}/>
         <br/>
+        <div id='inputEmailError'>
+            <p></p>
+        </div>
         </div>
 
         <label id="userPswdLogInId" className="labelClass" htmlFor="userPswd">Mot de passe</label>
@@ -71,13 +83,21 @@ const subscriptionUser = async (e) => {
           className="loginIcon"
           src={keyIcon}
           alt="icon"/>
-                <input id="userPswd" name="loginpswdinput" type="password" className="inputcssClass" placeholder="Entrez votre mot de passe" value={dataSubscription.password} onChange={(e)=>setDataSubscription({...dataSubscription, password: e.target.value})}/>
+                <input id="userPswd" name="loginpswdinput" type="password" className="inputcssClass" placeholder="Entrez votre mot de passe" defaultValue={dataSubscription.password} onChange={(e)=>setDataSubscription({...dataSubscription, password: e.target.value})}/>
             <br/>
+            <div id='inputPswdError'>
+            <p></p>
+        </div>
+        </div>
+<div className='btnSpaceClass'>
+        <div className='soloBtnSpaceClass'>
+            <label id='userSubscriptionLogInId' className="labelClass" htmlFor='userSubscription'>
+                <input id='userSubscription' name='loginSubscriptioninput' type='submit' className="buttoncssClass"  defaultValue='REGISTER'/>
+            </label>
         </div>
 
-        <div className='btnSpaceClass'>
+        
 
-{TheReButtonSubmit({labelId:'userSubscriptionLogInId',btnValue:'REGISTER',btnId:'userSubscription',btnName:'loginSubscriptioninput'})}
         
         <div>
             <p>You already have an account ?</p>

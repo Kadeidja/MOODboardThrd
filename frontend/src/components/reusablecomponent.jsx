@@ -33,7 +33,7 @@ function TheReButtonSubmit({labelId,btnValue,btnId,btnName}){
     return(
         <div className='soloBtnSpaceClass'>
             <label id={labelId} className="labelClass" htmlFor={btnId}>
-                <input id={btnId} name={btnName} type='submit' className="buttoncssClass"  value={btnValue}/>
+                <input id={btnId} name={btnName} type='submit' className="buttoncssClass"  defaultValue={btnValue}/>
             </label>
         </div>
     )
@@ -43,7 +43,7 @@ function TheReButtonLink({labelId,btnValue,btnId,btnName,linksrc}){
         <div className='soloBtnSpaceClass'>
             <Link to={`/`+linksrc}>
             <label id={labelId} className="labelClass" htmlFor={btnId}>
-                <input id={btnId} name={btnName} type='' className="buttoncssClass"  value={btnValue}/>
+                <input id={btnId} name={btnName} type='' className="buttoncssClass"  defaultValue={btnValue}/>
             </label>
             </Link>
         </div>
