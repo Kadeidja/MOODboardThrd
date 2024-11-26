@@ -6,17 +6,17 @@ const mongoose = require('mongoose')
 
 const BDDFRST = process.env.BDDS_OWNER
 const BDDSCND = process.env.BDDS_PSWD
-//const BDDTHRD = process.env.BDD_CLUSTER_NAME
 const BDDFRTH = process.env.BDD_CLUSTER
-//  `mongodb+srv://${BDDFRST}:${BDDSCND}@${BDDTHRD}.rcntx.mongodb.net/?retryWrites=true&w=majority&appName=${BDDFRTH}`
-
-mongoose.connect(`mongodb+srv://${BDDFRST}:${BDDSCND}@moodboardcluster.rcntx.mongodb.net/?retryWrites=true&w=majority&appName=${BDDFRTH}`)
-    .then(() => console.log('Connexion à MongoDB réussie !'))
-    .catch((err) => console.log('Connexion à MongoDB échouée !',err));
+const appExpress = express();
+const cookiePrsr = require('cookie-parser');
 
 
-//const mongoose = require('mongoose');
-/*const uri = `mongodb+srv://${BDDFRST}:${BDDSCND}@moodboardcluster.rcntx.mongodb.net/?retryWrites=true&w=majority&appName=${BDDFRTH}`;
+appExpress.use(express.json());
+appExpress.use(cookiePrsr());
+appExpress.use(express.urlencoded({extended: false}));
+//DB connection
+
+const uri = `mongodb+srv://${BDDFRST}:${BDDSCND}@moodboardcluster.rcntx.mongodb.net/?retryWrites=true&w=majority&appName=${BDDFRTH}`;
 const clientOptions = { serverApi: { version: '1', strict: true, deprecationErrors: true } };
 async function run() {
   try {
@@ -30,12 +30,12 @@ async function run() {
   }
 }
 run().catch(console.dir);
-*/
 
-const appExpress = express();
 
-appExpress.use(express.json())
-appExpress.use('/', require('./routes/authRoute'))
+
+
+
+appExpress.use('/', require('./routes/authRoute'));
 //PORT CONNEXION-------------------------------------------------------------------------------------
 const normalizePort = val => {
     const port = parseInt(val, 10);
