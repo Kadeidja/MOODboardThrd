@@ -1,41 +1,25 @@
 const express = require('express');
 const dotenv = require('dotenv').config();
 const cors = require('cors')
-const mongoose = require('mongoose')
-
-
-const BDDFRST = process.env.BDDS_OWNER
-const BDDSCND = process.env.BDDS_PSWD
-const BDDFRTH = process.env.BDD_CLUSTER
-const appExpress = express();
+const dBconnexion = require('./utils/dbconnect');
 const cookiePrsr = require('cookie-parser');
+const { corsOptions } = require('./utils/corsoption');
 
+//EXPRESS IITIALIZATION
+const appExpress = express();
 
+//MIDDLEWARES
+appExpress.use(cors(corsOptions));
 appExpress.use(express.json());
-appExpress.use(cookiePrsr());
 appExpress.use(express.urlencoded({extended: false}));
-//DB connection
+appExpress.use(cookiePrsr());
 
-const uri = `mongodb+srv://${BDDFRST}:${BDDSCND}@moodboardcluster.rcntx.mongodb.net/?retryWrites=true&w=majority&appName=${BDDFRTH}`;
-const clientOptions = { serverApi: { version: '1', strict: true, deprecationErrors: true } };
-async function run() {
-  try {
-    // Create a Mongoose client with a MongoClientOptions object to set the Stable API version
-    await mongoose.connect(uri, clientOptions);
-    await mongoose.connection.db.admin().command({ ping: 1 });
-    console.log("Pinged your deployment. You successfully connected to MongoDB!");
-  } finally {
-    // Ensures that the client will close when you finish/error
-    await mongoose.disconnect();
-  }
-}
-run().catch(console.dir);
+//IMPORT DB CONNEXION
+dBconnexion();
 
-
-
-
-
+//GRAND ROUTE
 appExpress.use('/', require('./routes/authRoute'));
+
 //PORT CONNEXION-------------------------------------------------------------------------------------
 const normalizePort = val => {
     const port = parseInt(val, 10);

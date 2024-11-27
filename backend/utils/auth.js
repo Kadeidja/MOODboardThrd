@@ -17,11 +17,11 @@ const hashingThePswd = (password) => {
     })
 }
 
-const compraringThePswd = (password, hashed) =>{
+const comparingThePswd = (password, hashed) =>{
     return cryptor.compare(password, hashed)
 }
 
 module.exports = {
     hashingThePswd,
-    compraringThePswd
+    comparingThePswd
 }

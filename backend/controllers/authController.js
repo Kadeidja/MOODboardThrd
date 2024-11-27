@@ -1,5 +1,3 @@
-const express = require('express')
-const cors = require('cors')
 const UserModel = require('../models/authModel')
 const bcrypt = require('bcrypt')
 const {hashingThePswd, comparingThePswd} = require('../utils/auth')
@@ -11,35 +9,33 @@ const testLogin = (req,res) => {
 };
 //Sign In Form Function
 const signInFunc = async (req,res) =>{
-    
+    console.log('Données reçues :', req.body);
     try {
         const {name, email, password} = req.body;
         //
         if(!name){
-            return res.json({
-                error : 'The name is required',
-            })
-        };
-        // 
-        if(!password || password.length < 6){
-            return res.json({
-                error : 'Password be must more than 6 character',
-            })
+            return res.status(400).json({ error : 'The name is required'})
+        } 
+        //
+        if (!email || !email.includes('@')) {
+            return res.status(400).json({ error: 'not valid mail format' });
         }
         //
         const existingMail = await UserModel.findOne({email});
         if(existingMail){
-            return res.JSON.stringify({
-                error : 'Email already taken',
-            });
+            return res.status(400).json({ error : 'Email already taken'});
+        }
+        // 
+        if(!password || password.length < 6){
+            return res.status(400).json({error : 'Password be must more than 6 character'});
         }
 
         const hashedPswd = await hashingThePswd(password)
  
-        const newUserInDB = await UserModel.create({
+        const newUserInDB = await UserModel({
             name,
             email, 
-            password : hashedPswd
+            password : hashedPswd,
         })
         /*const newUserDB = await new UserModel ({
         name:;
@@ -51,10 +47,11 @@ const signInFunc = async (req,res) =>{
         return res.json(`Le compte de ${name} à bien été crée`)
         */
         await newUserInDB.save() 
-        return res.json (newUserInDB)
+        return res.status(201).json({message: `User ${name} created...`})
 
     } catch (error) {
         console.log(error);
+        res.status(500).json({ error: 'Internal Server Error' });
     }
 };
 
@@ -96,32 +93,39 @@ const logInFunc = async (req, res)=> {
         
     }*/
     const logInFunc = async (req, res)=> {
+        console.log('Données reçues :', req.body);
         try {
-            const [email, password] = req.body;
+            const {email, password} = req.body;
 
             const user = await UserModel.findOne({email});
             if(!user){
-                return res.json({
+                return res.status(404).json({
                     error: 'User not found'
+                })
+            }
+            if(!password){
+                return res.status(404).json({
+                    error: 'Where did the password go?'
                 })
             }
 
             const matchPswd = await comparingThePswd(password, user.password)
-            if (match) {
-                jswt.sign({email: user.email, id: user._id, name: user.name}, process.env.JSWT_SCRT,{} , (err,token) => {
-                    if(err) throw err;
-                    res.cookie('token', token).json(user)
-                })
-                res.json({
-                    success: `Password Match`
-                })
-            }if (!match) {
-                res.json({
-                    error: `Password Don't Match`
-                })
-            }
+           
+            if (!matchPswd) {
+                return res.status(401).json({ error: 'Invalid credentials' })
+        }
+            const token = jswt.sign({email: user.email, id: user._id, name: user.name}, process.env.JSWT_SCRT,{ expiresIn: '24h'});
+            res.cookie('token', token, { httpOnly: true }).status(200).json({
+                success: 'Login successful',
+                user: {
+                    id: user._id,
+                    name: user.name,
+                    email: user.email,
+                },
+        });
         } catch (error) {
             console.log(error)
+            res.status(500).json({ error: 'Internal Server Error' });
         }
     }
 
