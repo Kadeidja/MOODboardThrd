@@ -2,10 +2,10 @@
 import { useState } from 'react';
 import axios from 'axios';
 import { toast } from 'react-hot-toast';
-import { Await, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import userIcon from '../assets/usericon.svg';
 import keyIcon from '../assets/keylock.svg';
-import { TheReButtonLink,TheReButtonSubmit } from './reusablecomponent';
+import { TheReButtonLink } from './reusablecomponent';
 
 //const notify = () => toast({error});
 
@@ -18,37 +18,44 @@ const [dataSubscription,setDataSubscription] = useState({
     email:'',
     password: '',
 });
-const subscriptionUser = async (e) => {
+
+const SubscriptionUser = async (e) => {
     e.preventDefault();
     const {name, email, password} = dataSubscription
-    //const { ename, eemail, epassword} = errorDataSubscription
-               // {TheReButtonSubmit({labelId:'userSubscriptionLogInId',btnValue:'REGISTER',btnId:'userSubscription',btnName:'loginSubscriptioninput'})}
+    /*const name = dataSubscription.name;
+    const email = dataSubscription.email;
+    const password = dataSubscription.password;*/
 
     try {
-        const {dataSubscription} = await axios.post('/signin', {
-            name, email, password,
+         const dataResponse = await axios.post('/signin', 
+            {name, email, password},
+            { headers: { 'Content-Type': 'application/json' } },
+        );
+    //VALIDATION
+    if (dataResponse){
+        //console.log("TOTO")//ok
+        toast.success(dataResponse.data.message);//ok
+        setDataSubscription({ name: '', email: '', password: '' });
+        navigation('/login');
         }
-    )
-        if (dataSubscription.error){
-            toast.error(dataSubscription.error, {position:'bottom-left'})
 
-        } else {
-            setDataSubscription({})
-            toast.success('Sign In Succesfully!!!')
-            navigation('/login')
-        }
     } catch (error) {
-        console.log(error)
+        console.log("ERROR TYPE: " + error)
+        if (error.response) {
+            // Erreur avec une réponse du serveur
+            const serverError = error.response.data?.error || 'Server error.';
+            toast.error(serverError, { position: 'bottom-left' });
+        }
     }
-}
+};
     return(
         <>
 <div className="boxDivClass divLogIn">
     <div className="titleSpaceClass">
-    <h1> Subscription </h1>
+    <h1> Registration </h1>
     </div>
     <div className="connexionSpaceClass">
-        <form onSubmit={subscriptionUser}>
+        <form onSubmit={SubscriptionUser}>
         <label id="userNameLogInId" className="labelClass" htmlFor="loginuserName">Name
         </label>
         <div className="inputSpaceClass">

@@ -10,7 +10,6 @@ root.render(
   <React.StrictMode>
     <Toaster/>
     <App />
-    
   </React.StrictMode>
 );
 

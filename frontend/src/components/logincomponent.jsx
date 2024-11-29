@@ -1,19 +1,53 @@
 import { useState } from 'react';
-
+import { toast } from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
 //import userIcon from '../assets/usericon.svg'
 import keyIcon from '../assets/keylock.svg'
 import axios from 'axios';
 
 export default function LogInComp(){
-const [dataLogin,setDataLogin] = useState({
+    const navigation = useNavigate('');
+
+    const [dataLogin,setDataLogin] = useState({
     email:'',
     password: '',
 })
-const loginUser = (e) =>{
-    e.preventDefault()
-    axios.get('/')
-    
+//const [isLoading, setLoading] = useState(false);
+/*
+const handleChange = (e) => {
+    const { name, value } = e.target;
+    setDataLogin((prev) => ({
+        ...prev,
+        [name]: value,
+    }));
+};
+*/
+const loginUser = async (e) =>{
+    e.preventDefault();
+    const {email, password} = dataLogin;
+    /*const{ email = dataLogin.email;
+        const password = dataLogin.password;}*/
+    try {
+        const foundedData = await axios.post('/login',
+            {email, password},
+            { headers: { 'Content-Type': 'application/json' }},        
+);
+if (foundedData){
+    toast.success('Sign Up Succesfully!!!')
+    setDataLogin({})
+    navigation('/')
 }
+
+} catch (error) {
+    console.log("ERROR TYPE: " + error)
+    if(error.response){
+    //console.log("TOTO")
+    const serverError = error.response.data?.error || 'Error Server.';
+    toast.error(serverError, {position:'bottom-left'});
+    }
+} 
+    
+};
 return(
 <>
 <div className="boxDivClass divLogIn">
@@ -46,7 +80,7 @@ return(
 
         <div className='soloBtnSpaceClass'>
             <label id="userSubmitLogInId" className="labelClass" htmlFor="userSubmit">
-                <input id="userSubmit" name="loginSubmitinput" type="submit" className="buttoncssClass loginBtn"  value="Soumettre"/>
+                <input id="userSubmit" name="loginSubmitinput" type="submit" className="buttoncssClass loginBtn"  value='SUBMIT'/>
             </label>
         </div>
 </div>
