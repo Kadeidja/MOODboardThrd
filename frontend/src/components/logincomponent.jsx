@@ -24,20 +24,26 @@ const handleChange = (e) => {
 */
 const loginUser = async (e) =>{
     e.preventDefault();
-    const {email, password} = dataLogin;
+    //const {email, password} = dataLogin;
     /*const{ email = dataLogin.email;
         const password = dataLogin.password;}*/
     try {
         const foundedData = await axios.post('/login',
-            {email, password},
+            {ulemail: dataLogin.email, 
+            ulpswd: dataLogin.password},
             { headers: { 'Content-Type': 'application/json' }},        
 );
+console.log("Server response:", foundedData);
+toast.success('Sign Up Succesfully!!!')
+    setDataLogin({})
+    navigation('/')
+    /*
 if (foundedData){
     toast.success('Sign Up Succesfully!!!')
     setDataLogin({})
     navigation('/')
 }
-
+*/
 } catch (error) {
     console.log("ERROR TYPE: " + error)
     if(error.response){

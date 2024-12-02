@@ -1,15 +1,20 @@
 const express = require('express');
 const dotenv = require('dotenv').config();
-const cors = require('cors')
+const cors = require('cors');
 const dBconnexion = require('./utils/dbconnect');
 const cookiePrsr = require('cookie-parser');
-const { corsOptions } = require('./utils/corsoption');
+const { corsOption } = require('./utils/corsoption');
+const authRoutes = require('./routes/authRoute')
+const bodyParser = require('body-parser')
 
 //EXPRESS IITIALIZATION
 const appExpress = express();
 
 //MIDDLEWARES
-appExpress.use(cors(corsOptions));
+
+appExpress.use(cors(corsOption));
+appExpress.use(bodyParser.json())
+//appExpress.options('*', cors(corsOption));
 appExpress.use(express.json());
 appExpress.use(express.urlencoded({extended: false}));
 appExpress.use(cookiePrsr());
@@ -18,8 +23,7 @@ appExpress.use(cookiePrsr());
 dBconnexion();
 
 //GRAND ROUTE
-appExpress.use('/', require('./routes/authRoute'));
-
+appExpress.use('/', authRoutes);
 //PORT CONNEXION-------------------------------------------------------------------------------------
 const normalizePort = val => {
     const port = parseInt(val, 10);
@@ -32,10 +36,10 @@ const normalizePort = val => {
     }
     return false;
   };
-const port = normalizePort(process.env.MY_BCK_PORT || 4000)
- 
-appExpress.listen(
-  port,() =>{
+
+
+const port = normalizePort(process.env.MY_BCK_PORT || 5000);
+appExpress.listen( port,() =>{
       console.log(`Server is running on port ${port}`);
   }
 );

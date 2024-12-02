@@ -12,11 +12,18 @@ const dBconnexion = async ()  =>{
     await mongoose.connect(uri, clientOptions);
     await mongoose.connection.db.admin().command({ ping: 1 });
     console.log("Pinged your deployment. You successfully connected to MongoDB!");
-  } finally {
+  } catch (error) {
+    console.error('',error)
+    process.exit(1);
     // Ensures that the client will close when you finish/error
-    await mongoose.disconnect();
   }
-}
+};
+process.on('SIGINT', async () => {
+  console.log('Deconnecter de MONGDB...');
+  await mongoose.disconnect();
+  console.log('Deconnecter de MONGDB...');
+  process.exit(0);
+});
 
 
 module.exports = dBconnexion;

@@ -11,7 +11,7 @@ import { TheReButtonLink } from './reusablecomponent';
 
 
 export default function SignInComp(){
-const navigation = useNavigate('');
+const navigation = useNavigate();
 
 const [dataSubscription,setDataSubscription] = useState({
     name: '',
@@ -21,23 +21,29 @@ const [dataSubscription,setDataSubscription] = useState({
 
 const SubscriptionUser = async (e) => {
     e.preventDefault();
-    const {name, email, password} = dataSubscription
+    //const {name, email, password} = dataSubscription
     /*const name = dataSubscription.name;
     const email = dataSubscription.email;
     const password = dataSubscription.password;*/
-
+    console.log("Data being sent:", dataSubscription);//ok
     try {
-         const dataResponse = await axios.post('/signin', 
-            {name, email, password},
-            { headers: { 'Content-Type': 'application/json' } },
+         const dataResponse = await axios.post('http://localhost:5000/signin', {
+            ulname: dataSubscription.name, 
+            ulemail: dataSubscription.email, 
+            ulpswd: dataSubscription.password}
         );
-    //VALIDATION
-    if (dataResponse){
+        //console.log('Data Subscription before submit:', dataSubscription);
+    //VALIDATION 
+    console.log("Server response:", dataResponse);
+    toast.success(dataResponse.data.message);//ok
+    setDataSubscription({ name: '', email: '', password: '' });
+    navigation('/login');
+    /*if (dataResponse){
         //console.log("TOTO")//ok
-        toast.success(dataResponse.data.message);//ok
-        setDataSubscription({ name: '', email: '', password: '' });
-        navigation('/login');
-        }
+        
+        
+       
+        }*/
 
     } catch (error) {
         console.log("ERROR TYPE: " + error)
@@ -63,7 +69,7 @@ const SubscriptionUser = async (e) => {
           className="loginIcon"
           src={userIcon}
           alt="icon"/>
-          <input id="loginuserName" name="loginnameinput" type="text" className="inputcssClass" placeholder="Veuillez entrer votre nom" defaultValue={dataSubscription.name} onChange={(e)=>setDataSubscription({...dataSubscription, name: e.target.value})}/>
+          <input id="loginuserName" name="loginnameinput" type="text" className="inputcssClass" placeholder="Veuillez entrer votre nom" value={dataSubscription.name} onChange={(e)=>setDataSubscription({...dataSubscription, name: e.target.value})}/>
         
         <br/>
         <div id='inputNameError'>
@@ -77,7 +83,7 @@ const SubscriptionUser = async (e) => {
           className="loginIcon"
           src={keyIcon}
           alt="icon"/>
-          <input id="userMail" name="loginmailinput" type="email" className="inputcssClass" placeholder="Entrez votre e-mail"  defaultValue={dataSubscription.email} onChange={(e)=>setDataSubscription({...dataSubscription, email: e.target.value})}/>
+          <input id="userMail" name="loginmailinput" type="email" className="inputcssClass" placeholder="Entrez votre e-mail"  value={dataSubscription.email} onChange={(e)=>setDataSubscription({...dataSubscription, email: e.target.value})}/>
         <br/>
         <div id='inputEmailError'>
             <p></p>
@@ -90,7 +96,7 @@ const SubscriptionUser = async (e) => {
           className="loginIcon"
           src={keyIcon}
           alt="icon"/>
-                <input id="userPswd" name="loginpswdinput" type="password" className="inputcssClass" placeholder="Entrez votre mot de passe" defaultValue={dataSubscription.password} onChange={(e)=>setDataSubscription({...dataSubscription, password: e.target.value})}/>
+                <input id="userPswd" name="loginpswdinput" type="password" className="inputcssClass" placeholder="Entrez votre mot de passe" value={dataSubscription.password} onChange={(e)=>setDataSubscription({...dataSubscription, password: e.target.value})}/>
             <br/>
             <div id='inputPswdError'>
             <p></p>
@@ -99,7 +105,7 @@ const SubscriptionUser = async (e) => {
 <div className='btnSpaceClass'>
         <div className='soloBtnSpaceClass'>
             <label id='userSubscriptionLogInId' className="labelClass" htmlFor='userSubscription'>
-                <input id='userSubscription' name='loginSubscriptioninput' type='submit' className="buttoncssClass"  defaultValue='REGISTER'/>
+                <input id='userSubscription' name='loginSubscriptioninput' type='submit' className="buttoncssClass"  value='REGISTER'/>
             </label>
         </div>
 

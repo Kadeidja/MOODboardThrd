@@ -11,11 +11,15 @@ const testLogin = (req, res) => {
 
 // Sign Up Function
 const signInFunc = async (req, res) => {
+    console.log('Received data for SignIn:', req.body);
     try {
         const { name, email, password } = req.body;
-
+        console.log('Name:', name, 'Email:', email, 'Password:', password);
         if (!name) {
             return res.status(400).json({ error: 'The name is required' });
+        }
+        if(!email || !email.include('@')){
+            return res.status(400).json({error: 'Invalid Email'});
         }
         if (!password || password.length < 6) {
             return res.status(400).json({ error: 'Password must be more than 6 characters' });
@@ -29,12 +33,16 @@ const signInFunc = async (req, res) => {
         const hashedPswd = await hashingThePswd(password);
 
         const newUserInDB = await UserModel.create({
-            name,
-            email,
-            password: hashedPswd,
+            ulname: name,
+            ulemail: email,
+            ulpswd: hashedPswd,
         });
 
+        console.log('User in going to be saved on the database' , newUserInDB)
+
+        //await newUserInDB.save();
         return res.status(201).json(newUserInDB);
+
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: 'Something went wrong on the server' });
