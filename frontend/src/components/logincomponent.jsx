@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { toast } from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
-//import userIcon from '../assets/usericon.svg'
 import keyIcon from '../assets/keylock.svg'
 import axios from 'axios';
 
@@ -12,21 +11,8 @@ export default function LogInComp(){
     email:'',
     password: '',
 })
-//const [isLoading, setLoading] = useState(false);
-/*
-const handleChange = (e) => {
-    const { name, value } = e.target;
-    setDataLogin((prev) => ({
-        ...prev,
-        [name]: value,
-    }));
-};
-*/
 const loginUser = async (e) =>{
     e.preventDefault();
-    //const {email, password} = dataLogin;
-    /*const{ email = dataLogin.email;
-        const password = dataLogin.password;}*/
     try {
         const foundedData = await axios.post('/login',
             {ulemail: dataLogin.email, 
@@ -37,17 +23,10 @@ console.log("Server response:", foundedData);
 toast.success('Sign Up Succesfully!!!')
     setDataLogin({})
     navigation('/')
-    /*
-if (foundedData){
-    toast.success('Sign Up Succesfully!!!')
-    setDataLogin({})
-    navigation('/')
-}
-*/
+
 } catch (error) {
     console.log("ERROR TYPE: " + error)
     if(error.response){
-    //console.log("TOTO")
     const serverError = error.response.data?.error || 'Error Server.';
     toast.error(serverError, {position:'bottom-left'});
     }

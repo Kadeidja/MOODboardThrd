@@ -1,6 +1,12 @@
-import { useState } from 'react';
-export default function HomeComp({ulname}){
+import React, { useState } from 'react';
+import {getUser} from '../futils/dbapi'
+
+export default function HomeComp(){
+
 return(
-    <h1> Hello {ulname} </h1>
+
+    <h1> Hello {getUser} </h1>
 )
 };
+
+

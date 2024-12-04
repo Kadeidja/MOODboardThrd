@@ -14,7 +14,6 @@ const appExpress = express();
 
 appExpress.use(cors(corsOption));
 appExpress.use(bodyParser.json())
-//appExpress.options('*', cors(corsOption));
 appExpress.use(express.json());
 appExpress.use(express.urlencoded({extended: false}));
 appExpress.use(cookiePrsr());
@@ -24,6 +23,8 @@ dBconnexion();
 
 //GRAND ROUTE
 appExpress.use('/', authRoutes);
+
+
 //PORT CONNEXION-------------------------------------------------------------------------------------
 const normalizePort = val => {
     const port = parseInt(val, 10);

@@ -1,10 +1,9 @@
-const UserModel = require('../models/authModel')
-const bcrypt = require('bcrypt')
-const {hashingThePswd, comparingThePswd} = require('../utils/auth')
+const UserModel = require('../models/authModel');
+const bcrypt = require('bcrypt');
+const {hashingThePswd, comparingThePswd} = require('../utils/auth');
 const jswt = require('jsonwebtoken');
 const express = require('express');
 const appExpress = express();
-
 appExpress.use(express.json());
 
 const testLogin = (req,res) => {
