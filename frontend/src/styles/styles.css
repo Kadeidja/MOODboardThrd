@@ -15,6 +15,7 @@ color: #0f0f0f;
 background-image: url("../assets/imgbackground/cartographer.png") ;
 -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  /*background-color: rgb(100, 115, 128);*/
 }
 #root
 h1 , h2 , h3 , h4{

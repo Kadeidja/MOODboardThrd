@@ -5,17 +5,17 @@ const passport = require('passport')
 const TheUser = require('../models/authModel')
 //FETCHING DATA
 //GET all the users
-routerExpress.get('http://localhost:5000/users', async (req,res) =>{
+routerExpress.get('/users', async (req,res) =>{
   try{
     const getUsers = await TheUser.find();
     res.json(getUsers);
   }catch(error){
-    res.status(500).json({message:error.message})
+    res.status(500).json({message: error.message})
   }
 });
 
 //GET one user
-routerExpress.get('http://localhost:5000/user',async (req,res) =>{
+routerExpress.get('/user/:id',async (req,res) =>{
   try {
     const getOneUser = await TheUser.findById(req.params.id);
     if (!getOneUser) {
