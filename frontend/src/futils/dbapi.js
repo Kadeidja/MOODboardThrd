@@ -5,3 +5,5 @@ export async function getUser(id) {
     return user;
   }
     */
+
+  // API route to get users from the database

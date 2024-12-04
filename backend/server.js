@@ -11,7 +11,6 @@ const bodyParser = require('body-parser')
 const appExpress = express();
 
 //MIDDLEWARES
-
 appExpress.use(cors(corsOption));
 appExpress.use(bodyParser.json())
 appExpress.use(express.json());
