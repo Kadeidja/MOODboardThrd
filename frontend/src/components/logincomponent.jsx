@@ -22,6 +22,7 @@ const loginUser = async (e) =>{
 console.log("Server response:", foundedData);
 toast.success('Sign Up Succesfully!!!')
     setDataLogin({})
+    sessionStorage.setItem('id', foundedData.data.user.id);
     navigation('/')
 
 } catch (error) {
