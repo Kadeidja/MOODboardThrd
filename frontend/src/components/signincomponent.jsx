@@ -7,8 +7,6 @@ import userIcon from '../assets/usericon.svg';
 import keyIcon from '../assets/keylock.svg';
 import { TheReButtonLink } from './reusablecomponent';
 
-//const notify = () => toast({error});
-
 
 export default function SignInComp(){
 const navigation = useNavigate();
@@ -21,10 +19,6 @@ const [dataSubscription,setDataSubscription] = useState({
 
 const SubscriptionUser = async (e) => {
     e.preventDefault();
-    //const {name, email, password} = dataSubscription
-    /*const name = dataSubscription.name;
-    const email = dataSubscription.email;
-    const password = dataSubscription.password;*/
     console.log("Data being sent:", dataSubscription);//ok
     try {
          const dataResponse = await axios.post('http://localhost:5000/signin', {
@@ -32,19 +26,11 @@ const SubscriptionUser = async (e) => {
             ulemail: dataSubscription.email, 
             ulpswd: dataSubscription.password}
         );
-        //console.log('Data Subscription before submit:', dataSubscription);
     //VALIDATION 
     console.log("Server response:", dataResponse);
     toast.success(dataResponse.data.message);//ok
     setDataSubscription({ name: '', email: '', password: '' });
     navigation('/login');
-    /*if (dataResponse){
-        //console.log("TOTO")//ok
-        
-        
-       
-        }*/
-
     } catch (error) {
         console.log("ERROR TYPE: " + error)
         if (error.response) {

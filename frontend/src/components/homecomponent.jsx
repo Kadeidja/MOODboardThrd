@@ -5,9 +5,6 @@ import React from 'react';
 import useFetch from '../hooks/dataFetcher';
 
 export default function HomeComp(){
-   // const userId = localStorage.getItem('userId');
-   //const userId = 
-    //const { id: userId } = useParams();
     const userId = sessionStorage.getItem('id');
         const {data, error, loading } = useFetch(`/user/${userId}`,'GET');
         if(loading){
@@ -19,15 +16,9 @@ export default function HomeComp(){
             return <p>Error: {error}</p>
             
         };
-    
-   // console.log(data.getOneUser._id)
-    //console.log(userId)
-
-    
 return(
     <>
     <h1> Hello, {data?.ulname}</h1>
-
     </>
 )
 };

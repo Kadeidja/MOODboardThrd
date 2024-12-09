@@ -6,7 +6,6 @@ import axios from 'axios';
 
 export default function LogInComp(){
     const navigation = useNavigate('');
-
     const [dataLogin,setDataLogin] = useState({
     email:'',
     password: '',
